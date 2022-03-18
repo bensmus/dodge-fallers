@@ -8,7 +8,7 @@ const CHARACTER_WIDTH = 10
 const CHARACTER_HEIGHT = 10
 
 const gamestate = {
-  pos: {x: 0, y: 0},
+  pos: {x: 10, y: 10},
   collidables: [
     {x: 0, y: 0, width: GAME_WIDTH, height: 0},
     {x: 0, y: GAME_HEIGHT, width: GAME_WIDTH, height: 0},
@@ -43,73 +43,6 @@ function handleKeydown(event) {
   } else {
     return;
   }
-}
-
-function noCollision(currentpos, futurepos, collidables) {
-  for (const collidable of collidables) {
-    if (collision(currentpos, futurepos, collidable)) {
-      return false;
-    }
-  }
-  return true;
-}
-
-/**
- * Does collidable block path?
- */
-function collision(currentpos, futurepos, collidable) {
-  let path = [currentpos, futurepos]
-  const {x, y, width, height} = collidable;
-  // perimeter lines of collidable
-  const topln = [{x: x, y: y}, {x: x + width, y: y}]
-  const botln = [{x: x, y: y + height}, {x: x + top, y: y + height}]
-  const leftln = [{x: x, y: y}, {x: x, y: y + height}]
-  const rightln = [{x: x + width, y: y}, {x: x + width, y: y + height}]
-  
-  if (intersectHorizontal(path, topln)) {
-    return true
-  }
-  if (intersectHorizontal(path, botln)) {
-    return true
-  }
-  if (intersectVertical(path, leftln)) {
-    return true
-  }
-  if (intersectVertical(path, rightln)) {
-    return true
-  }
-  return false
-}
-
-function intersectHorizontal(path, ln) {
-  if (overlap([path[0].x, path[1].x], [ln[0].x, ln[1].x])) {
-    if (straddles([path[0].y, path[1].y], ln[0].y)) {
-      return true
-    }
-  }
-  return false
-}
-
-function intersectVertical(path, ln) {
-  if (overlap([path[0].y, path[1].y], [ln[0].y, ln[1].y])) {
-    if (straddles([path[0].x, path[1].x], ln[0].x)) {
-      return true
-    }
-  }
-  return false
-}
-
-function overlap(range1, range2) {
-  if (Math.max(...range1) > Math.max(...range2)) {
-    if (straddles(range1, Math.max(...range2))) {
-      return true
-    }
-  }
-  return false
-}
-
-function straddles(range, value) {
-  return value > Math.min(range) && value < Math.max(range)
 }
 
 function render() {
