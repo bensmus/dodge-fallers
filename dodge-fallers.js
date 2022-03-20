@@ -8,12 +8,14 @@ const CHARACTER_WIDTH = 10
 const CHARACTER_HEIGHT = 10
 
 const gamestate = {
-  pos: {x: 10, y: 10},
+  // ! pos is not good. Use instance of a playerPoints object that has many points and can be 
+  // ! easily shifted up or down
+  pos: { x: 10, y: 10 },
   collidables: [
-    {x: 0, y: 0, width: GAME_WIDTH, height: 0},
-    {x: 0, y: GAME_HEIGHT, width: GAME_WIDTH, height: 0},
-    {x: 0, y: 0, width: 0, height: GAME_HEIGHT},
-    {x: GAME_WIDTH, y: 0, width: 0, height: GAME_HEIGHT},
+    { x: 0, y: 0, width: GAME_WIDTH, height: 0 },
+    { x: 0, y: GAME_HEIGHT, width: GAME_WIDTH, height: 0 },
+    { x: 0, y: 0, width: 0, height: GAME_HEIGHT },
+    { x: GAME_WIDTH, y: 0, width: 0, height: GAME_HEIGHT },
   ]
 }
 
@@ -23,16 +25,16 @@ addEventListener('keydown', (event) => {
 
 function handleKeydown(event) {
   if (event.key == 'a') {
-    futurepos = {x: gamestate.pos.x - MOVE_SIZE, y: gamestate.pos.y}
+    futurepos = { x: gamestate.pos.x - MOVE_SIZE, y: gamestate.pos.y }
   }
   else if (event.key == 'd') {
-    futurepos = {x: gamestate.pos.x + MOVE_SIZE, y: gamestate.pos.y}
+    futurepos = { x: gamestate.pos.x + MOVE_SIZE, y: gamestate.pos.y }
   }
   else if (event.key == 'w') {
-    futurepos = {x: gamestate.pos.x, y: gamestate.pos.y - MOVE_SIZE}
+    futurepos = { x: gamestate.pos.x, y: gamestate.pos.y - MOVE_SIZE }
   }
   else if (event.key == 's') {
-    futurepos = {x: gamestate.pos.x, y: gamestate.pos.y + MOVE_SIZE}
+    futurepos = { x: gamestate.pos.x, y: gamestate.pos.y + MOVE_SIZE }
   }
   else {
     return;

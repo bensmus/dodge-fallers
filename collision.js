@@ -15,13 +15,13 @@ function noCollision(currentPoint, futurePoint, collidables) {
  */
 function collision(currentPoint, futurePoint, collidable) {
   let path = [currentPoint, futurePoint]
-  const {x, y, width, height} = collidable;
+  const { x, y, width, height } = collidable;
   // perimeter lines of collidable
-  const topln = [{x: x, y: y}, {x: x + width, y: y}]
-  const botln = [{x: x, y: y + height}, {x: x + width, y: y + height}]
-  const leftln = [{x: x, y: y}, {x: x, y: y + height}]
-  const rightln = [{x: x + width, y: y}, {x: x + width, y: y + height}]
-  
+  const topln = [{ x: x, y: y }, { x: x + width, y: y }]
+  const botln = [{ x: x, y: y + height }, { x: x + width, y: y + height }]
+  const leftln = [{ x: x, y: y }, { x: x, y: y + height }]
+  const rightln = [{ x: x + width, y: y }, { x: x + width, y: y + height }]
+
   if (intersectHorizontal(path, topln)) {
     console.log('collides with top of collidable', path, topln)
     return true
