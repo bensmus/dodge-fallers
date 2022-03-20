@@ -3,7 +3,7 @@ const ctx = canvas.getContext('2d')!;
 
 const GAME_WIDTH = 500;
 const GAME_HEIGHT = 500;
-const MOVE_SIZE = 5;
+const MOVE_SIZE = 10;
 
 
 const gamestate = {
@@ -25,10 +25,10 @@ function handleKeydown(event: KeyboardEvent) {
   let dy = 0;
 
   if (event.key == 'a') {
-    dx = MOVE_SIZE;
+    dx = -MOVE_SIZE;
   }
   else if (event.key == 'd') {
-    dx = -MOVE_SIZE;
+    dx = MOVE_SIZE;
   }
   else if (event.key == 'w') {
     dy = -MOVE_SIZE;
@@ -55,6 +55,16 @@ function render() {
     gamestate.player.width,
     gamestate.player.width
   );
+  
+  for (const collidable of gamestate.collidables) {
+    ctx.fillRect(collidable.topleft.x, collidable.topleft.y, collidable.width, collidable.height)
+  }
+
+  const seconds = new Date().getSeconds()
+  if (seconds % 5 == 0) {
+    addObstacle(gamestate.collidables)
+  }
+
   window.requestAnimationFrame(render);
 }
 

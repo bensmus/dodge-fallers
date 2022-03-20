@@ -61,7 +61,7 @@ class Rect {
         }
       }
     }
-    return true;
+    return false;
   }
 
   getMovementSegments(dx: number, dy: number) {

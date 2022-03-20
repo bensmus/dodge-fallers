@@ -30,7 +30,7 @@ class Rect {
                 }
             }
         }
-        return true;
+        return false;
     }
     getMovementSegments(dx, dy) {
         const segs = [];
