@@ -47,22 +47,16 @@ function handleKeydown(event: KeyboardEvent) {
   gamestate.player = gamestate.player.shift(dx, dy);
 }
 
+setInterval(() => {
+  addObstacle(gamestate.collidables);
+}, 500)
+
 function render() {
   ctx.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
-  ctx.fillRect(
-    gamestate.player.topleft.x,
-    gamestate.player.topleft.y,
-    gamestate.player.width,
-    gamestate.player.width
-  );
-  
-  for (const collidable of gamestate.collidables) {
-    ctx.fillRect(collidable.topleft.x, collidable.topleft.y, collidable.width, collidable.height)
-  }
+  gamestate.player.draw(ctx, 'black');
 
-  const seconds = new Date().getSeconds()
-  if (seconds % 5 == 0) {
-    addObstacle(gamestate.collidables)
+  for (const collidable of gamestate.collidables) {
+    collidable.draw(ctx, 'red');
   }
 
   window.requestAnimationFrame(render);

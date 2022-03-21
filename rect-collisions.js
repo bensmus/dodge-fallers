@@ -16,6 +16,10 @@ class Rect {
         this.left = { point1: this.topleft, point2: this.bottomleft, horizontal: false };
         this.segments = [this.top, this.right, this.bottom, this.left];
     }
+    draw(ctx, color) {
+        ctx.fillStyle = color;
+        ctx.fillRect(this.xleft, this.ytop, this.width, this.height);
+    }
     shift(dx, dy) {
         return new Rect(this.xleft + dx, this.ytop + dy, this.width, this.height);
     }

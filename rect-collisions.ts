@@ -46,6 +46,11 @@ class Rect {
     this.segments = [this.top, this.right, this.bottom, this.left];
   }
 
+  draw(ctx: CanvasRenderingContext2D, color: string) {
+    ctx.fillStyle = color;
+    ctx.fillRect(this.xleft, this.ytop, this.width, this.height);
+  }
+  
   shift(dx: number, dy: number) {
     return new Rect(this.xleft + dx, this.ytop + dy, this.width, this.height);
   }

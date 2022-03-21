@@ -41,15 +41,14 @@ function handleKeydown(event) {
     }
     gamestate.player = gamestate.player.shift(dx, dy);
 }
+setInterval(() => {
+    addObstacle(gamestate.collidables);
+}, 500);
 function render() {
     ctx.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
-    ctx.fillRect(gamestate.player.topleft.x, gamestate.player.topleft.y, gamestate.player.width, gamestate.player.width);
+    gamestate.player.draw(ctx, 'black');
     for (const collidable of gamestate.collidables) {
-        ctx.fillRect(collidable.topleft.x, collidable.topleft.y, collidable.width, collidable.height);
-    }
-    const seconds = new Date().getSeconds();
-    if (seconds % 5 == 0) {
-        addObstacle(gamestate.collidables);
+        collidable.draw(ctx, 'red');
     }
     window.requestAnimationFrame(render);
 }
