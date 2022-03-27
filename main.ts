@@ -3,7 +3,7 @@ const ctx = canvas.getContext('2d')!;
 
 const GAME_WIDTH = 500;
 const GAME_HEIGHT = 500;
-const MOVE_SIZE = 10;
+const MOVE_SIZE = 5;
 
 type KeydownStates = {
   [key: string]: boolean
@@ -26,10 +26,6 @@ const gamestate = {
 };
 
 addEventListener('keydown', (event) => {
-  if (gamestate.keydownStates[event.key] == true) {
-    return;
-  }
-  handleJustPressed(event)
   gamestate.keydownStates[event.key] = true;
 });
 
@@ -38,20 +34,20 @@ addEventListener('keyup', (event) => {
 })
 
 
-function handleJustPressed(event: KeyboardEvent) {
+function move() {
   let dx = 0;
   let dy = 0;
 
-  if (event.key == 'a') {
+  if (gamestate.keydownStates['a']) {
     dx = -MOVE_SIZE;
   }
-  else if (event.key == 'd') {
+  else if (gamestate.keydownStates['d']) {
     dx = MOVE_SIZE;
   }
-  else if (event.key == 'w') {
+  else if (gamestate.keydownStates['w']) {
     dy = -MOVE_SIZE;
   }
-  else if (event.key == 's') {
+  else if (gamestate.keydownStates['s']) {
     dy = MOVE_SIZE;
   }
   else {
@@ -70,6 +66,7 @@ setInterval(() => {
 }, 500)
 
 function render() {
+  move();
   ctx.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
   gamestate.player.draw(ctx, 'black');
 
