@@ -4,6 +4,8 @@ const ctx = canvas.getContext('2d');
 const GAME_WIDTH = 500;
 const GAME_HEIGHT = 500;
 const MOVE_SIZE = 5;
+canvas.width = GAME_WIDTH;
+canvas.height = GAME_HEIGHT;
 const gamestate = {
     player: new Rect(10, 10, 10, 10),
     collidables: [
@@ -62,6 +64,4 @@ function render() {
     }
     window.requestAnimationFrame(render);
 }
-canvas.width = GAME_WIDTH;
-canvas.height = GAME_HEIGHT;
 render();

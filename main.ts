@@ -5,6 +5,9 @@ const GAME_WIDTH = 500;
 const GAME_HEIGHT = 500;
 const MOVE_SIZE = 5;
 
+canvas.width = GAME_WIDTH;
+canvas.height = GAME_HEIGHT;
+
 type KeydownStates = {
   [key: string]: boolean
 }
@@ -77,6 +80,4 @@ function render() {
   window.requestAnimationFrame(render);
 }
 
-canvas.width = GAME_WIDTH;
-canvas.height = GAME_HEIGHT;
 render();
