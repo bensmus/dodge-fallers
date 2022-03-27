@@ -5,6 +5,9 @@ const GAME_WIDTH = 500;
 const GAME_HEIGHT = 500;
 const MOVE_SIZE = 10;
 
+type KeydownStates = {
+  [key: string]: boolean
+}
 
 const gamestate = {
   player: new Rect(10, 10, 10, 10),
@@ -13,14 +16,29 @@ const gamestate = {
     new Rect(0, GAME_HEIGHT, GAME_WIDTH, 0),
     new Rect(0, 0, 0, GAME_HEIGHT),
     new Rect(GAME_WIDTH, 0, 0, GAME_HEIGHT),
-  ]
+  ],
+  keydownStates: {
+    'a': false,
+    'd': false,
+    'w': false,
+    's': false
+  } as KeydownStates
 };
 
 addEventListener('keydown', (event) => {
-  handleKeydown(event);
+  if (gamestate.keydownStates[event.key] == true) {
+    return;
+  }
+  handleJustPressed(event)
+  gamestate.keydownStates[event.key] = true;
 });
 
-function handleKeydown(event: KeyboardEvent) {
+addEventListener('keyup', (event) => {
+  gamestate.keydownStates[event.key] = false;
+})
+
+
+function handleJustPressed(event: KeyboardEvent) {
   let dx = 0;
   let dy = 0;
 

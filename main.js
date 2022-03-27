@@ -11,12 +11,25 @@ const gamestate = {
         new Rect(0, GAME_HEIGHT, GAME_WIDTH, 0),
         new Rect(0, 0, 0, GAME_HEIGHT),
         new Rect(GAME_WIDTH, 0, 0, GAME_HEIGHT),
-    ]
+    ],
+    keydownStates: {
+        'a': false,
+        'd': false,
+        'w': false,
+        's': false
+    }
 };
 addEventListener('keydown', (event) => {
-    handleKeydown(event);
+    if (gamestate.keydownStates[event.key] == true) {
+        return;
+    }
+    handleJustPressed(event);
+    gamestate.keydownStates[event.key] = true;
 });
-function handleKeydown(event) {
+addEventListener('keyup', (event) => {
+    gamestate.keydownStates[event.key] = false;
+});
+function handleJustPressed(event) {
     let dx = 0;
     let dy = 0;
     if (event.key == 'a') {

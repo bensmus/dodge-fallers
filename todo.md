@@ -1,6 +1,4 @@
 Top priority:
-- Keyboard event handling
-  https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent#special_cases
 - Passing through really thin obstacles
 - Makes sense to render things on a grid
 
