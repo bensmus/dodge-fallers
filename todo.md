@@ -1,6 +1,6 @@
 Top priority:
-- Passing through really thin obstacles
 - Makes sense to render things on a grid
+  - You can rewrite collision logic to be cleaner if you are using a grid
 - Implement "always in the middle logic" and dashes
 
 Features:
