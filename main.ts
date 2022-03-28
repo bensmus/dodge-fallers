@@ -3,54 +3,62 @@ const ctx = canvas.getContext('2d')!;
 
 const CANVAS_WIDTH = 500;
 const CANVAS_HEIGHT = 500;
-const GRID_STEP_SIZE = 10;
+const GRID_STEP_SIZE = 20;
 
 canvas.width = CANVAS_WIDTH;
 canvas.height = CANVAS_HEIGHT;
 
-type KeydownStates = {
-  [key: string]: boolean
-}
+const MOVEMENT_REFRESH_MILLISECONDS = 50;
 
 const gamestate = {
   gameObjectManager: new GameObjectManager(new Player(0, 0), []),
-  keydownStates: {
-    'a': false,
-    'd': false,
-    'w': false,
-    's': false
-  } as KeydownStates
+  heldKey: '',
+  interval: NaN
 };
 
 addEventListener('keydown', (event) => {
-  gamestate.keydownStates[event.key] = true;
+  if (event.repeat) {
+    return;
+  }
+  gamestate.heldKey = event.key;
+  if(move()) {
+    clearInterval(gamestate.interval)
+    gamestate.interval = setInterval(move, 500); // !
+  }
 });
 
 addEventListener('keyup', (event) => {
-  gamestate.keydownStates[event.key] = false;
+  if (event.key == gamestate.heldKey) {
+    clearInterval(gamestate.interval)
+  }
 })
-
 
 function move() {
   let dColumn = 0;
   let dRow = 0;
 
-  if (gamestate.keydownStates['a']) {
+  if (gamestate.heldKey == 'a') {
     dColumn = -1;
+    console.log('a')
   }
-  else if (gamestate.keydownStates['d']) {
+  else if (gamestate.heldKey == 'd') {
     dColumn = 1;
+    console.log('d')
   }
-  else if (gamestate.keydownStates['w']) {
+  else if (gamestate.heldKey == 'w') {
     dRow = -1;
+    console.log('w')
   }
-  else if (gamestate.keydownStates['s']) {
+  else if (gamestate.heldKey == 's') {
     dRow = 1;
+    console.log('s')
   }
   else {
-    return;
+    return false;
   }
+  console.log('moving')
   gamestate.gameObjectManager.handlePlayerMove(dColumn, dRow);
+  return true;
 }
 
 // setInterval(() => {
@@ -58,11 +66,9 @@ function move() {
 // }, 500)
 
 function render() {
-  move();
   ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
   gamestate.gameObjectManager.draw()
   window.requestAnimationFrame(render);
 }
 
 render();
-

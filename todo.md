@@ -1,5 +1,6 @@
 Top priority:
-- Proper movement refresh rates
+- Movement is seizure inducing
+  - Make the block movement appear continuous but use grid game logic
 - Working collision logic for wide gameObjects
 - Implement "always in the middle logic" and dashes
 
