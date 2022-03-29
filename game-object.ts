@@ -55,15 +55,28 @@ class GameObjectManager {
       potentialColumn < 0 ||
       potentialColumn > (CANVAS_WIDTH / GRID_STEP_SIZE - 1)
       ) {
-        return;
+        return false;
     }
     // collision check
     this.collidables.forEach(collidable => {
       if (collidable.row == potentialRow && collidable.column == potentialColumn) {
-        return;
+        return false;
       }
     })
-    this.player.row = potentialRow;
-    this.player.column = potentialColumn;
+
+    // do this 5 times - gradual motion
+    let count = 0;
+    const interval = setInterval(() => {
+      this.player.row += 0.2 * dRow;
+      this.player.column += 0.2 * dColumn;
+      count++;
+      if (count > 4) {
+        clearInterval(interval);
+        handleKeydown(gamestate.heldKey);
+      }
+    }, 30)
+    // avoid rounding errors
+    this.player.row = Math.round(this.player.row);
+    this.player.column = Math.round(this.player.column);
   } 
 }

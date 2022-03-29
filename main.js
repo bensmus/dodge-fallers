@@ -9,49 +9,36 @@ canvas.height = CANVAS_HEIGHT;
 const MOVEMENT_REFRESH_MILLISECONDS = 50;
 const gamestate = {
     gameObjectManager: new GameObjectManager(new Player(0, 0), []),
-    heldKey: '',
-    interval: NaN
+    heldKey: ''
 };
 addEventListener('keydown', (event) => {
     if (event.repeat) {
         return;
     }
-    gamestate.heldKey = event.key;
-    if (move()) {
-        clearInterval(gamestate.interval);
-        gamestate.interval = setInterval(move, MOVEMENT_REFRESH_MILLISECONDS);
-    }
+    handleKeydown(event.key);
 });
-addEventListener('keyup', (event) => {
-    if (event.key == gamestate.heldKey) {
-        clearInterval(gamestate.interval);
-    }
+addEventListener('keyup', event => {
+    gamestate.heldKey = '';
 });
-function move() {
-    let dColumn = 0;
-    let dRow = 0;
-    if (gamestate.heldKey == 'a') {
-        dColumn = -1;
-        console.log('a');
+function handleKeydown(key) {
+    switch (key) {
+        case 'w':
+            gamestate.gameObjectManager.handlePlayerMove(0, -1);
+            gamestate.heldKey = 'w';
+            break;
+        case 'a':
+            gamestate.gameObjectManager.handlePlayerMove(-1, 0);
+            gamestate.heldKey = 'a';
+            break;
+        case 's':
+            gamestate.gameObjectManager.handlePlayerMove(0, 1);
+            gamestate.heldKey = 's';
+            break;
+        case 'd':
+            gamestate.gameObjectManager.handlePlayerMove(1, 0);
+            gamestate.heldKey = 'd';
+            break;
     }
-    else if (gamestate.heldKey == 'd') {
-        dColumn = 1;
-        console.log('d');
-    }
-    else if (gamestate.heldKey == 'w') {
-        dRow = -1;
-        console.log('w');
-    }
-    else if (gamestate.heldKey == 's') {
-        dRow = 1;
-        console.log('s');
-    }
-    else {
-        return false;
-    }
-    console.log('moving');
-    gamestate.gameObjectManager.handlePlayerMove(dColumn, dRow);
-    return true;
 }
 // setInterval(() => {
 //   populateObstacles(gamestate.grid, 4); // 4 filled in grid squares
