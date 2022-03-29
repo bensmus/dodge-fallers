@@ -19,7 +19,7 @@ addEventListener('keydown', (event) => {
     gamestate.heldKey = event.key;
     if (move()) {
         clearInterval(gamestate.interval);
-        gamestate.interval = setInterval(move, 500); // !
+        gamestate.interval = setInterval(move, MOVEMENT_REFRESH_MILLISECONDS);
     }
 });
 addEventListener('keyup', (event) => {
