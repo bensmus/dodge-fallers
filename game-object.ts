@@ -64,6 +64,8 @@ class GameObjectManager {
       }
     })
 
+    // ! This is terrible
+    // ! https://spicyyoghurt.com/tutorials/html5-javascript-game-development/create-a-smooth-canvas-animation
     // do this 5 times - gradual motion
     let count = 0;
     const interval = setInterval(() => {
