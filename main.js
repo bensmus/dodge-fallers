@@ -62,8 +62,8 @@ function updatePlayerPos() {
             gamestate.gameObjectManager.player.row = row;
             gamestate.motionDestination = null;
         }
-        gamestate.gameObjectManager.player.column += Math.sign(col - gamestate.gameObjectManager.player.column) * 0.1;
-        gamestate.gameObjectManager.player.row += Math.sign(row - gamestate.gameObjectManager.player.row) * 0.1;
+        gamestate.gameObjectManager.player.column += Math.sign(col - gamestate.gameObjectManager.player.column) * 0.2;
+        gamestate.gameObjectManager.player.row += Math.sign(row - gamestate.gameObjectManager.player.row) * 0.2;
     }
 }
 function drawGrid(ctx) {

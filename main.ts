@@ -76,19 +76,19 @@ function updatePlayerPos() {
       gamestate.gameObjectManager.player.row = row;
       gamestate.motionDestination = null;
     }
-    gamestate.gameObjectManager.player.column += Math.sign(col - gamestate.gameObjectManager.player.column) * 0.1;
-    gamestate.gameObjectManager.player.row += Math.sign(row - gamestate.gameObjectManager.player.row) * 0.1;
+    gamestate.gameObjectManager.player.column += Math.sign(col - gamestate.gameObjectManager.player.column) * 0.2;
+    gamestate.gameObjectManager.player.row += Math.sign(row - gamestate.gameObjectManager.player.row) * 0.2;
   }
 }
 
 function drawGrid(ctx: CanvasRenderingContext2D) {
-  for (let x = 0; x<CANVAS_WIDTH; x+=GRID_STEP_SIZE)  {
+  for (let x = 0; x < CANVAS_WIDTH; x += GRID_STEP_SIZE)  {
     ctx.beginPath()
     ctx.moveTo(x, 0);
     ctx.lineTo(x, CANVAS_HEIGHT);
     ctx.stroke()
   }
-  for (let y = 0; y<CANVAS_HEIGHT; y+=GRID_STEP_SIZE)  {
+  for (let y = 0; y < CANVAS_HEIGHT; y += GRID_STEP_SIZE)  {
     ctx.beginPath()
     ctx.moveTo(0, y);
     ctx.lineTo(CANVAS_WIDTH, y);
