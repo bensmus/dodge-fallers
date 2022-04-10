@@ -1,8 +1,7 @@
 Top priority:
-- Movement is seizure inducing
-  - Make the block movement appear continuous but use grid game logic
-- Working collision logic for wide gameObjects
-- Implement "always in the middle logic" and dashes
+- Collision logic
+- Implement always in the middle
+- Game world, tiles, minimap
 
 Features:
 - Add dashing options

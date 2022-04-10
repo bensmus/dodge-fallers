@@ -14,8 +14,10 @@ const gamestate = {
 function approx(a, b) {
     return Math.abs(a - b) < 0.1;
 }
-addEventListener('keyup', () => {
-    gamestate.heldKey = '';
+addEventListener('keyup', (event) => {
+    if (gamestate.heldKey === event.key) {
+        gamestate.heldKey = '';
+    }
 });
 addEventListener('keydown', (event) => {
     gamestate.heldKey = event.key;
@@ -80,13 +82,13 @@ function drawGrid(ctx) {
         ctx.stroke();
     }
 }
+setInterval(updatePlayerPos, 20);
 let t = new Date().getTime();
 function render() {
     ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
     drawGrid(ctx);
     gamestate.gameObjectManager.draw();
     updateMotionDestination();
-    updatePlayerPos();
     t = new Date().getTime();
     window.requestAnimationFrame(render);
 }
