@@ -3,7 +3,7 @@ const ctx = canvas.getContext('2d')!;
 
 const CANVAS_WIDTH = 500;
 const CANVAS_HEIGHT = 500;
-const GRID_STEP_SIZE = 20;
+const GRID_STEP_SIZE = 15;
 
 canvas.width = CANVAS_WIDTH;
 canvas.height = CANVAS_HEIGHT;
@@ -78,8 +78,8 @@ function updatePlayerPos() {
       gamestate.gameObjectManager.player.row = row;
       gamestate.motionDestination = null;
     }
-    gamestate.gameObjectManager.player.column += Math.sign(col - gamestate.gameObjectManager.player.column) * 0.2;
-    gamestate.gameObjectManager.player.row += Math.sign(row - gamestate.gameObjectManager.player.row) * 0.2;
+    gamestate.gameObjectManager.player.column += Math.sign(col - gamestate.gameObjectManager.player.column) * 0.1;
+    gamestate.gameObjectManager.player.row += Math.sign(row - gamestate.gameObjectManager.player.row) * 0.1;
   }
 }
 
@@ -98,15 +98,13 @@ function drawGrid(ctx: CanvasRenderingContext2D) {
   }
 }
 
-setInterval(updatePlayerPos, 20)
+setInterval(updatePlayerPos, 10)
 
-let t = new Date().getTime();
 function render() {
   ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-  drawGrid(ctx);
+  // drawGrid(ctx);
   gamestate.gameObjectManager.draw()
   updateMotionDestination()
-  t = new Date().getTime();
   window.requestAnimationFrame(render);
 }
 

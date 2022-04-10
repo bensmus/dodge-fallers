@@ -3,7 +3,7 @@ const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 const CANVAS_WIDTH = 500;
 const CANVAS_HEIGHT = 500;
-const GRID_STEP_SIZE = 20;
+const GRID_STEP_SIZE = 15;
 canvas.width = CANVAS_WIDTH;
 canvas.height = CANVAS_HEIGHT;
 const gamestate = {
@@ -64,8 +64,8 @@ function updatePlayerPos() {
             gamestate.gameObjectManager.player.row = row;
             gamestate.motionDestination = null;
         }
-        gamestate.gameObjectManager.player.column += Math.sign(col - gamestate.gameObjectManager.player.column) * 0.2;
-        gamestate.gameObjectManager.player.row += Math.sign(row - gamestate.gameObjectManager.player.row) * 0.2;
+        gamestate.gameObjectManager.player.column += Math.sign(col - gamestate.gameObjectManager.player.column) * 0.1;
+        gamestate.gameObjectManager.player.row += Math.sign(row - gamestate.gameObjectManager.player.row) * 0.1;
     }
 }
 function drawGrid(ctx) {
@@ -82,14 +82,12 @@ function drawGrid(ctx) {
         ctx.stroke();
     }
 }
-setInterval(updatePlayerPos, 20);
-let t = new Date().getTime();
+setInterval(updatePlayerPos, 10);
 function render() {
     ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-    drawGrid(ctx);
+    // drawGrid(ctx);
     gamestate.gameObjectManager.draw();
     updateMotionDestination();
-    t = new Date().getTime();
     window.requestAnimationFrame(render);
 }
 render();
