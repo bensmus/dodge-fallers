@@ -17,7 +17,7 @@ class GameObjectManager {
         const allGameObjects = Array.prototype.concat([this.player], this.collidables);
         allGameObjects.forEach((obj) => {
             ctx.fillStyle = obj.color;
-            ctx.fillRect(obj.row * GRID_STEP_SIZE, obj.column * GRID_STEP_SIZE, obj.width ? obj.width * GRID_STEP_SIZE : GRID_STEP_SIZE, obj.height ? obj.height * GRID_STEP_SIZE : GRID_STEP_SIZE);
+            ctx.fillRect(obj.column * GRID_STEP_SIZE, obj.row * GRID_STEP_SIZE, obj.width ? obj.width * GRID_STEP_SIZE : GRID_STEP_SIZE, obj.height ? obj.height * GRID_STEP_SIZE : GRID_STEP_SIZE);
         });
     }
     handlePlayerMove(dRow, dColumn) {
@@ -38,21 +38,6 @@ class GameObjectManager {
                 return false;
             }
         });
-        // ! This is terrible
-        // ! https://spicyyoghurt.com/tutorials/html5-javascript-game-development/create-a-smooth-canvas-animation
-        // do this 5 times - gradual motion
-        let count = 0;
-        const interval = setInterval(() => {
-            this.player.row += 0.2 * dRow;
-            this.player.column += 0.2 * dColumn;
-            count++;
-            if (count > 4) {
-                clearInterval(interval);
-                handleKeydown(gamestate.heldKey);
-            }
-        }, 30);
-        // avoid rounding errors
-        this.player.row = Math.round(this.player.row);
-        this.player.column = Math.round(this.player.column);
+        return true;
     }
 }

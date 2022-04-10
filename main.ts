@@ -8,52 +8,100 @@ const GRID_STEP_SIZE = 20;
 canvas.width = CANVAS_WIDTH;
 canvas.height = CANVAS_HEIGHT;
 
-const MOVEMENT_REFRESH_MILLISECONDS = 50;
+interface Gamestate {
+  gameObjectManager: GameObjectManager,
+  heldKey: string,
+  motionDestination: null | number[]
+}
 
-const gamestate = {
+const gamestate: Gamestate = {
   gameObjectManager: new GameObjectManager(new Player(0, 0), []),
-  heldKey: ''
+  heldKey: '',
+  motionDestination: null
 };
 
-addEventListener('keydown', (event) => {
-  if (event.repeat) {
-    return;
-  }
-  handleKeydown(event.key)
-});
+function approx(a:number, b:number) {
+  return Math.abs(a - b) < 0.1
+}
 
-addEventListener('keyup', event => {
-  gamestate.heldKey = '';
+addEventListener('keyup', () => {
+  gamestate.heldKey = ''
 })
 
-function handleKeydown(key : string) {
-  switch (key) {
-    case 'w':
-      gamestate.gameObjectManager.handlePlayerMove(0, -1);
-      gamestate.heldKey = 'w'
-      break;
-    case 'a':
-      gamestate.gameObjectManager.handlePlayerMove(-1, 0);
-      gamestate.heldKey = 'a'
-      break;
-    case 's':
-      gamestate.gameObjectManager.handlePlayerMove(0, 1);
-      gamestate.heldKey = 's'
-      break;
-    case 'd':
-      gamestate.gameObjectManager.handlePlayerMove(1, 0);
-      gamestate.heldKey = 'd'
-      break;
+addEventListener('keydown', (event) => {
+ gamestate.heldKey = event.key;
+});
+
+const PIXELS_PER_SECOND = 500
+
+/**
+ * key is held and 
+ * not in the middle of a motion animation and 
+ * no collisions 
+ * 
+ * -> initiate player move (set new motionDestination)
+ */
+
+function updateMotionDestination() {
+  if (gamestate.motionDestination === null) { // ! add collision check
+    if (gamestate.heldKey === 'w') {
+      gamestate.motionDestination = [gamestate.gameObjectManager.player.column, gamestate.gameObjectManager.player.row - 1] 
+    }
+    if (gamestate.heldKey === 'a') {
+      gamestate.motionDestination = [gamestate.gameObjectManager.player.column - 1, gamestate.gameObjectManager.player.row] 
+    }
+    if (gamestate.heldKey === 's') {
+      gamestate.motionDestination = [gamestate.gameObjectManager.player.column, gamestate.gameObjectManager.player.row + 1] 
+    }
+    if (gamestate.heldKey === 'd') {
+      gamestate.motionDestination = [gamestate.gameObjectManager.player.column + 1, gamestate.gameObjectManager.player.row] 
+    }
   }
 }
 
-// setInterval(() => {
-//   populateObstacles(gamestate.grid, 4); // 4 filled in grid squares
-// }, 500)
+/**
+ * based on motionDestination
+ * 
+ * when arives to motionDestination, set it to null
+ * so that it signifies that we have completed motion animation
+ */
+function updatePlayerPos(seconds: number) {
+  if (gamestate.motionDestination) {
+    const [col, row] = gamestate.motionDestination;
+    if (approx(gamestate.gameObjectManager.player.column, col) && approx(gamestate.gameObjectManager.player.row, row)) {
+      gamestate.gameObjectManager.player.column = col;
+      gamestate.gameObjectManager.player.row = row;
+      gamestate.motionDestination = null;
+    }
+    gamestate.gameObjectManager.player.column += Math.sign(col - gamestate.gameObjectManager.player.column) * 0.1;
+    gamestate.gameObjectManager.player.row += Math.sign(row - gamestate.gameObjectManager.player.row) * 0.1;
+  }
+}
 
+function drawGrid(ctx: CanvasRenderingContext2D) {
+  for (let x = 0; x<CANVAS_WIDTH; x+=GRID_STEP_SIZE)  {
+    ctx.beginPath()
+    ctx.moveTo(x, 0);
+    ctx.lineTo(x, CANVAS_HEIGHT);
+    ctx.stroke()
+  }
+  for (let y = 0; y<CANVAS_HEIGHT; y+=GRID_STEP_SIZE)  {
+    ctx.beginPath()
+    ctx.moveTo(0, y);
+    ctx.lineTo(CANVAS_WIDTH, y);
+    ctx.stroke()
+  }
+}
+
+let t = new Date().getTime();
 function render() {
   ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+  drawGrid(ctx);
   gamestate.gameObjectManager.draw()
+  updateMotionDestination()
+  updatePlayerPos((new Date().getTime() - t) / 1000)
+  t = new Date().getTime();
+  console.log(gamestate.gameObjectManager.player.row, gamestate.gameObjectManager.player.column)
   window.requestAnimationFrame(render);
 }
 
