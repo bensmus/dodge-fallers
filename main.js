@@ -42,6 +42,10 @@ function updateMotionDestination() {
         if (gamestate.heldKey === 'd') {
             gamestate.motionDestination = [gamestate.gameObjectManager.player.column + 1, gamestate.gameObjectManager.player.row];
         }
+        else {
+            return;
+        }
+        console.log('updated motion destination');
     }
 }
 /**
@@ -50,7 +54,7 @@ function updateMotionDestination() {
  * when arives to motionDestination, set it to null
  * so that it signifies that we have completed motion animation
  */
-function updatePlayerPos(seconds) {
+function updatePlayerPos() {
     if (gamestate.motionDestination) {
         const [col, row] = gamestate.motionDestination;
         if (approx(gamestate.gameObjectManager.player.column, col) && approx(gamestate.gameObjectManager.player.row, row)) {
@@ -82,9 +86,8 @@ function render() {
     drawGrid(ctx);
     gamestate.gameObjectManager.draw();
     updateMotionDestination();
-    updatePlayerPos((new Date().getTime() - t) / 1000);
+    updatePlayerPos();
     t = new Date().getTime();
-    console.log(gamestate.gameObjectManager.player.row, gamestate.gameObjectManager.player.column);
     window.requestAnimationFrame(render);
 }
 render();
