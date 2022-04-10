@@ -12,6 +12,22 @@ class Player {
   width?: number;
   height?: number;
   color: string = 'black';
+  
+  constructor(row: number, column: number, width?: number, height?: number) {
+    this.row = row;
+    this.column = column;
+    this.width = width;
+    this.height = height;
+  }
+}
+
+class Collidable {
+  row: number;
+  column: number;
+  width?: number;
+  height?: number;
+  color: string = 'red';
+
   constructor(row: number, column: number, width?: number, height?: number) {
     this.row = row;
     this.column = column;

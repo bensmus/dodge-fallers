@@ -8,6 +8,15 @@ class Player {
         this.height = height;
     }
 }
+class Collidable {
+    constructor(row, column, width, height) {
+        this.color = 'red';
+        this.row = row;
+        this.column = column;
+        this.width = width;
+        this.height = height;
+    }
+}
 class GameObjectManager {
     constructor(player, collidables) {
         this.player = player;

@@ -15,7 +15,12 @@ interface Gamestate {
 }
 
 const gamestate: Gamestate = {
-  gameObjectManager: new GameObjectManager(new Player(0, 0), []),
+  gameObjectManager: new GameObjectManager(new Player(0, 0), [
+    new Collidable(11,9),
+    new Collidable(12,10),
+    new Collidable(13,11),
+    new Collidable(14,12),
+  ]),
   heldKey: '',
   motionDestination: null
 };
@@ -44,8 +49,8 @@ const PIXELS_PER_SECOND = 500
  * -> initiate player move (set new motionDestination)
  */
 
-function updateMotionDestination() {
-  if (gamestate.motionDestination === null) { // ! add collision check
+function updateMotionDestination() { // ! Terribly written function
+  if (gamestate.motionDestination === null) {
     if (gamestate.heldKey === 'w') {
       gamestate.motionDestination = [gamestate.gameObjectManager.player.column, gamestate.gameObjectManager.player.row - 1] 
     }
@@ -57,10 +62,12 @@ function updateMotionDestination() {
     }
     if (gamestate.heldKey === 'd') {
       gamestate.motionDestination = [gamestate.gameObjectManager.player.column + 1, gamestate.gameObjectManager.player.row] 
-    } else {
-      return;
     }
-    console.log('updated motion destination')
+    if (gamestate.motionDestination && gamestate.gameObjectManager.collidables.find(collidable => ( // space is occupied
+      collidable.row == gamestate.motionDestination[1] && collidable.column == gamestate.motionDestination[0])
+      )) {
+      gamestate.motionDestination = null;
+    } 
   }
 }
 
@@ -78,8 +85,8 @@ function updatePlayerPos() {
       gamestate.gameObjectManager.player.row = row;
       gamestate.motionDestination = null;
     }
-    gamestate.gameObjectManager.player.column += Math.sign(col - gamestate.gameObjectManager.player.column) * 0.1;
-    gamestate.gameObjectManager.player.row += Math.sign(row - gamestate.gameObjectManager.player.row) * 0.1;
+    gamestate.gameObjectManager.player.column += Math.sign(col - gamestate.gameObjectManager.player.column) * 0.05;
+    gamestate.gameObjectManager.player.row += Math.sign(row - gamestate.gameObjectManager.player.row) * 0.05;
   }
 }
 
