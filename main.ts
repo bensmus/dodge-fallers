@@ -64,7 +64,7 @@ function updateMotionDestination() { // ! Terribly written function
       gamestate.motionDestination = [gamestate.gameObjectManager.player.column + 1, gamestate.gameObjectManager.player.row] 
     }
     if (gamestate.motionDestination && gamestate.gameObjectManager.collidables.find(collidable => ( // space is occupied
-      collidable.row == gamestate.motionDestination[1] && collidable.column == gamestate.motionDestination[0])
+      collidable.row == gamestate.motionDestination![1] && collidable.column == gamestate.motionDestination![0])
       )) {
       gamestate.motionDestination = null;
     } 
