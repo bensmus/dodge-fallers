@@ -29,24 +29,4 @@ class GameObjectManager {
             ctx.fillRect(obj.column * GRID_STEP_SIZE, obj.row * GRID_STEP_SIZE, obj.width ? obj.width * GRID_STEP_SIZE : GRID_STEP_SIZE, obj.height ? obj.height * GRID_STEP_SIZE : GRID_STEP_SIZE);
         });
     }
-    handlePlayerMove(dRow, dColumn) {
-        const potentialRow = this.player.row + dRow;
-        const potentialColumn = this.player.column + dColumn;
-        console.log(potentialRow, potentialColumn);
-        console.log(CANVAS_WIDTH / GRID_STEP_SIZE);
-        // out of bounds check
-        if (potentialRow < 0 ||
-            potentialRow > (CANVAS_HEIGHT / GRID_STEP_SIZE - 1) ||
-            potentialColumn < 0 ||
-            potentialColumn > (CANVAS_WIDTH / GRID_STEP_SIZE - 1)) {
-            return false;
-        }
-        // collision check
-        this.collidables.forEach(collidable => {
-            if (collidable.row == potentialRow && collidable.column == potentialColumn) {
-                return false;
-            }
-        });
-        return true;
-    }
 }

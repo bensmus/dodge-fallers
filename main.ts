@@ -39,8 +39,6 @@ addEventListener('keydown', (event) => {
  gamestate.heldKey = event.key;
 });
 
-const PIXELS_PER_SECOND = 500
-
 /**
  * key is held and 
  * not in the middle of a motion animation and 
