@@ -1,5 +1,7 @@
-Top priority: *Refactor*
+Top priority:
   - Have a constant for walking speed
+  - Pressing a direction key while the other key is held down 
+    causes the old key to be forgotten
 
 Features:
 - Implement always in the middle
